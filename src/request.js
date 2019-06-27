@@ -10,6 +10,12 @@ function syncRules(){
 		} else {
 			rules = JSON.parse(syncData.rules);
 		}
+
+		// Extension icon has green background if any rules are active.
+		anyActive = rules.every(r => r.isActive === false);
+		!anyActive ? chrome.browserAction.setIcon({path:"img/switch-browser-active.png"}) : 
+			chrome.browserAction.setIcon({path:"img/switch-browser.png"});
+
 		chrome.runtime.sendMessage({
 			syncDataUpdated : true,
 			rules : rules
